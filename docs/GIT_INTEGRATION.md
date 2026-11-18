@@ -26,8 +26,10 @@ my_gui_example/                    # application repository
 
 The intended remotes are:
 
-- Engine: `https://github.com/xd7rsxr5mw-pixel/my_gui_engine.git`
-- Example: `https://github.com/xd7rsxr5mw-pixel/my_gui_example.git`
+- Engine: `git@github.com:xd7rsxr5mw-pixel/my_gui_engine.git`
+- Example: `git@github.com:xd7rsxr5mw-pixel/my_gui_example.git`
+
+Use `ssh -T git@github.com` to check that GitHub recognizes your SSH key.
 
 The local checkout is named `my_gui_example`. The repositories remain local until their `main` branches are pushed.
 
@@ -42,7 +44,7 @@ Git stores an engine commit ID as a **gitlink** in the application tree. `.gitmo
 After publication, clone with:
 
 ```sh
-git clone --recurse-submodules https://github.com/xd7rsxr5mw-pixel/my_gui_example.git
+git clone --recurse-submodules git@github.com:xd7rsxr5mw-pixel/my_gui_example.git
 cd my_gui_example
 ```
 
@@ -154,7 +156,7 @@ After a future directory rename, reconfigure in fresh generated folders. CMake c
 After engine publication, add it directly to another application:
 
 ```sh
-git submodule add https://github.com/xd7rsxr5mw-pixel/my_gui_engine.git gui_engine
+git submodule add git@github.com:xd7rsxr5mw-pixel/my_gui_engine.git gui_engine
 git -C gui_engine switch --detach origin/main
 git add .gitmodules gui_engine
 git commit -m "Add MyGui engine dependency"

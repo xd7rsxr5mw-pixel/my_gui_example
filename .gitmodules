@@ -1,4 +1,4 @@
 [submodule "gui_engine"]
 	path = gui_engine
-	url = https://github.com/xd7rsxr5mw-pixel/my_gui_engine.git
+	url = git@github.com:xd7rsxr5mw-pixel/my_gui_engine.git
 	branch = main

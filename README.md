@@ -11,7 +11,7 @@ The local checkout is named `my_gui_example`.
 Once the repositories have been published and your account has access to both:
 
 ```sh
-git clone --recurse-submodules https://github.com/xd7rsxr5mw-pixel/my_gui_example.git
+git clone --recurse-submodules git@github.com:xd7rsxr5mw-pixel/my_gui_example.git
 cd my_gui_example
 ```
 
@@ -73,7 +73,7 @@ The shell includes a resizable/collapsible navigator and Explorer, workflow scro
 Add the engine repository as a submodule in the consuming project. Keep that project's `gui_src/`, styling, backend, and application tests in its own repository. The independent fixture in `gui_engine/gui_testing/consumer/` demonstrates the minimal CMake integration; it is a small engine test harness, not the four-workflow showcase.
 
 ```sh
-git submodule add https://github.com/xd7rsxr5mw-pixel/my_gui_engine.git gui_engine
+git submodule add git@github.com:xd7rsxr5mw-pixel/my_gui_engine.git gui_engine
 git -C gui_engine switch --detach origin/main
 git add .gitmodules gui_engine
 git commit -m "Add MyGui engine dependency"
