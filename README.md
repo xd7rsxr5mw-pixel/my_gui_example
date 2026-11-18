@@ -4,7 +4,7 @@ A four-workflow Qt 6.9+ / C++23 showcase for Windows and Linux. The application 
 
 The two projects have separate Git histories. This repository owns the showcase, its backend, and its styling. `gui_engine/` is a Git submodule pinned to an exact engine commit; it contains no copy of the showcase. The initial repository setup is local only. Publishing is a separate step, with the engine published before the example that references it.
 
-The existing local folder is still named `My_GUI`, as requested while its Windows directory lock is unresolved. The repository identity is `my_gui_example`; a later clone will use that name by default. The folder can be renamed once no terminal or process holds it open.
+The local checkout is named `my_gui_example`.
 
 ## Obtain the complete checkout
 
@@ -74,13 +74,12 @@ Add the engine repository as a submodule in the consuming project. Keep that pro
 
 ```sh
 git submodule add https://github.com/xd7rsxr5mw-pixel/my_gui_engine.git gui_engine
-git -C gui_engine fetch origin --tags
-git -C gui_engine switch --detach v1.0.0
+git -C gui_engine switch --detach origin/main
 git add .gitmodules gui_engine
-git commit -m "Add MyGui engine v1.0.0"
+git commit -m "Add MyGui engine dependency"
 ```
 
-These commands require the engine commit and tag to have been published first. The parent records the resolved commit, rather than following a moving branch or tag during builds.
+These commands require the engine's `main` branch on GitHub. The parent records the exact commit checked out from that branch.
 
 ```cpp
 auto a = app.state("a", 2.0);

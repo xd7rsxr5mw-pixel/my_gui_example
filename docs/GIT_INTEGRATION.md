@@ -10,7 +10,7 @@ Use two repositories, rather than different branches of one repository:
 | `my_gui_example` | Four-workflow showcase, `gui_src/`, production styling, calculator backend, application checks, and an exact engine dependency. |
 
 ```text
-my_gui_example/                    # application repository; locally still My_GUI
+my_gui_example/                    # application repository
 ├── .gitmodules
 ├── gui_engine/                    # independent my_gui_engine submodule
 │   ├── include/, src/, qml/, cmake/
@@ -29,7 +29,7 @@ The intended remotes are:
 - Engine: `https://github.com/xd7rsxr5mw-pixel/my_gui_engine.git`
 - Example: `https://github.com/xd7rsxr5mw-pixel/my_gui_example.git`
 
-Preparation is **local only**. Remotes, commits, and local tags do not publish code. The local folder remains `My_GUI` at the user's request; `my_gui_example` is the repository name and the default folder name for a future clone. Do not retry the folder rename until authorized again.
+The local checkout is named `my_gui_example`. The repositories remain local until their `main` branches are pushed.
 
 The engine remote must exist and be accessible before another machine can clone the example recursively. A private engine requires read access for every consumer and its CI runner. A public example does not grant access to a private dependency.
 
@@ -57,19 +57,19 @@ git submodule status --recursive
 
 This updates the application and restores its recorded engine version. It does not select the newest engine release. A detached HEAD inside the engine is normal for a pinned dependency. Configure and build never fetch or upgrade Git dependencies.
 
-To adopt a published release deliberately:
+To adopt the latest published engine commit deliberately:
 
 ```sh
-git switch -c update/engine-v1.0.1
-git -C gui_engine fetch origin --tags
-git -C gui_engine switch --detach v1.0.1
+git switch -c update/engine
+git -C gui_engine fetch origin
+git -C gui_engine switch --detach origin/main
 # Configure, build, and test this application.
 git diff --submodule=log
 git add gui_engine
-git commit -m "Update MyGui engine to v1.0.1"
+git commit -m "Update MyGui engine dependency"
 ```
 
-The tag is a human-friendly choice; the application still records its resolved commit. Review and merge that dependency bump as an ordinary application change. Do not use `git submodule update --remote` as a routine build step: it selects newer branch content instead of reproducing the application's saved dependency.
+The application records the commit at `origin/main` when you make the update. Review and merge that dependency bump as an ordinary application change. Use `git submodule update --init --recursive` to restore the recorded dependency for a build.
 
 To roll back a bad upgrade, revert its application commit and restore the dependency:
 
@@ -82,9 +82,9 @@ Do not reset or force-push shared history to roll back a dependency.
 
 ## Branches, releases, and shared fixes
 
-Both repositories use a stable `main` branch with short-lived `feature/*`, `fix/*`, or `update/*` branches. A long-lived `develop` branch is unnecessary for this project size. Engine branches/tags and application branches/tags are independent.
+Both repositories use a stable `main` branch with short-lived `feature/*`, `fix/*`, or `update/*` branches. The engine and application have independent branch histories.
 
-The initial engine baseline is `v1.0.0`. Release tags are immutable:
+Applications pin engine commits. When describing release compatibility, use these versioning conventions:
 
 - **Patch:** compatible bug fixes.
 - **Minor:** compatible features and optional settings.
@@ -105,15 +105,20 @@ git -C gui_engine commit -m "Fix grouped card layout"
 
 Commit engine changes in the inner repository and application changes in the outer one. The application tracks the engine's commit pointer, not copied engine source files. Create a named branch before changing a detached checkout. Commit or deliberately preserve engine work before switching dependency revisions.
 
-When publication is authorized, publish the engine branch first and merge it into engine `main`. Publish the tested engine tag, then update and publish the application's gitlink. A parent must never reference an engine revision that other users cannot fetch.
+When publication is authorized, publish the engine branch first and merge it into engine `main`. Then update and publish the application's gitlink to a commit others can fetch.
 
-For the initial local baseline, the eventual publication order is:
+For the initial publication, push the engine from PowerShell first.
 
-```sh
-git -C gui_engine push -u origin main
-git -C gui_engine push origin v1.0.0
+```powershell
+cd 'C:\Users\Malte\Desktop\Coding\my_gui_example\gui_engine'
 git push -u origin main
-git push origin v1.0.0
+```
+
+After the engine push succeeds, push the example and its recorded submodule commit.
+
+```powershell
+cd 'C:\Users\Malte\Desktop\Coding\my_gui_example'
+git push --recurse-submodules=check -u origin main
 ```
 
 Do not run these commands until authorized and the engine remote is accessible. Empty remotes need no force push. If either remote gains history before publication, fetch and inspect it before integrating.
@@ -150,8 +155,7 @@ After engine publication, add it directly to another application:
 
 ```sh
 git submodule add https://github.com/xd7rsxr5mw-pixel/my_gui_engine.git gui_engine
-git -C gui_engine fetch origin --tags
-git -C gui_engine switch --detach v1.0.0
+git -C gui_engine switch --detach origin/main
 git add .gitmodules gui_engine
 git commit -m "Add MyGui engine dependency"
 ```
