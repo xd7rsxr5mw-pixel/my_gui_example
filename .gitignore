@@ -1,0 +1,15 @@
+/.generated/
+/build/
+/gui_testing/.artifacts/
+/CMakeUserPresets.json
+/CMakeCache.txt
+/CMakeFiles/
+/cmake_install.cmake
+/compile_commands.json
+/.vs/
+/.idea/
+.env
+.env.*
+!.env.example
+*.user
+__pycache__/

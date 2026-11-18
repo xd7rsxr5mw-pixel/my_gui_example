@@ -1,0 +1,22 @@
+{
+  "transparent": "#00000000",
+  "titleBar": "#0B1017", "titleIcon": "#D1D7E1", "nativeFrame": "#2D3D4F", "collapseIndicatorHover": "#EEF0F5",
+  "windowBackground": "#0B1017", "panel": "#1C2836", "panelInset": "#121A24",
+  "subWindowRaised": "#1C2836", "subWindowHeader": "#151F2A", "subWindowBorder": "#2D3D4F", "subWindowHeaderSeparator": "#2D3D4F",
+  "button": "#172230", "listHover": "#172230", "buttonHover": "#253448", "buttonPressed": "#2E3F54", "buttonSelected": "#121A24", "buttonBorder": "#2D3D4F",
+  "symbolBackground": "#151F2A", "disabledBackground": "#121A24",
+  "borderLight": "#8296AB", "borderGrey": "#8296AB", "borderDim": "#2D3D4F",
+  "textBright": "#EEF0F5", "textMain": "#D1D7E1", "textMuted": "#ADB4C2", "textSoft": "#BCC4D1", "textDisabled": "#8B92A0",
+  "scrollTrack": "#121A24", "scrollThumb": "#8296AB", "scrollThumbHover": "#52DDF5",
+  "panelScrollTrack": "#151F2A", "panelScrollThumb": "#65788D", "panelScrollThumbHover": "#8296AB",
+  "statusBarBackground": "#121A24", "overlay": "#C7000000",
+  "success": "#72DFB1", "warning": "#F4CE82", "danger": "#FF8D99", "actionAccent": "#52DDF5", "focusAccent": "#EEF0F5",
+  "accentCyan": "#52DDF5", "neonGreen": "#72DFB1", "neonRose": "#EBB5D8", "neonViolet": "#B6AEFF",
+  "workflowAccents": ["#52DDF5", "#B6AEFF", "#72DFB1", "#EBB5D8"],
+  "actionButton": {
+    "fill": "#101E2B", "top": "#1E3244", "hover": "#1C3549", "hoverTop": "#2A465B", "pressed": "#0E1924", "pressedTop": "#172838",
+    "edge": "#4D6D88", "hoverEdge": "#829EB3", "pressedEdge": "#829EB3", "label": "#EEF0F5",
+    "primaryFill": "#12303E", "primaryTop": "#23495A", "primaryHover": "#1B4555", "primaryHoverTop": "#234F5F", "primaryPressed": "#0F2631", "primaryPressedTop": "#1C3B49",
+    "primaryEdge": "#64AFBD", "primaryHoverEdge": "#52DDF5", "primaryPressedEdge": "#52DDF5", "primaryLabel": "#B5EAF3"
+  }
+}

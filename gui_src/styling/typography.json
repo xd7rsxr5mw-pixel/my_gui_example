@@ -1,0 +1,7 @@
+{
+  "fontFamily": "Inter", "workflowEyebrowSize": 11, "workflowTitleSize": 24,
+  "workflowButtonNumberSize": 13, "workflowButtonTitleSize": 15, "workflowButtonSubtitleSize": 12,
+  "appButtonSize": 14, "graphicButtonTextSize": 16, "collapseHeaderSize": 11, "subWindowDetailSize": 15,
+  "statusBarSize": 12, "settingsTitleSize": 24, "settingsBodySize": 15,
+  "workflowDigitSpacing": 0, "letterSpacing": 0, "mediumWeight": 500, "demiBoldWeight": 600, "boldWeight": 700
+}

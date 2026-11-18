@@ -1,0 +1,26 @@
+{
+  "version": 5,
+  "cmakeMinimumRequired": {"major": 3, "minor": 24, "patch": 0},
+  "configurePresets": [
+    {"name": "windows", "generator": "Ninja", "binaryDir": "${sourceDir}/.generated/cmake/windows-release",
+      "environment": {"PATH": "C:/msys64/ucrt64/bin;$penv{PATH}"},
+      "cacheVariables": {"CMAKE_BUILD_TYPE": "Release", "CMAKE_CXX_COMPILER": "C:/msys64/ucrt64/bin/g++.exe", "CMAKE_PREFIX_PATH": "C:/msys64/ucrt64"}},
+    {"name": "windows-dev", "inherits": "windows", "binaryDir": "${sourceDir}/.generated/cmake/windows-debug", "cacheVariables": {"CMAKE_BUILD_TYPE": "Debug"}},
+    {"name": "linux", "generator": "Ninja", "binaryDir": "${sourceDir}/.generated/cmake/linux-release", "cacheVariables": {"CMAKE_BUILD_TYPE": "Release"}},
+    {"name": "linux-dev", "inherits": "linux", "binaryDir": "${sourceDir}/.generated/cmake/linux-debug", "cacheVariables": {"CMAKE_BUILD_TYPE": "Debug"}},
+    {"name": "windows-tests", "inherits": "windows-dev", "binaryDir": "${sourceDir}/gui_testing/.artifacts/cmake/windows", "cacheVariables": {"MYGUI_ENGINE_BUILD_TESTS": "ON", "MYGUI_EXAMPLE_BUILD_TESTS": "ON", "MYGUI_EXAMPLE_BUILD_APP": "OFF"}},
+    {"name": "linux-tests", "inherits": "linux-dev", "binaryDir": "${sourceDir}/gui_testing/.artifacts/cmake/linux", "cacheVariables": {"MYGUI_ENGINE_BUILD_TESTS": "ON", "MYGUI_EXAMPLE_BUILD_TESTS": "ON", "MYGUI_EXAMPLE_BUILD_APP": "OFF"}}
+  ],
+  "buildPresets": [
+    {"name": "windows", "configurePreset": "windows", "jobs": 4},
+    {"name": "windows-dev", "configurePreset": "windows-dev", "jobs": 4},
+    {"name": "linux", "configurePreset": "linux", "jobs": 4},
+    {"name": "linux-dev", "configurePreset": "linux-dev", "jobs": 4},
+    {"name": "windows-tests", "configurePreset": "windows-tests", "jobs": 4},
+    {"name": "linux-tests", "configurePreset": "linux-tests", "jobs": 4}
+  ],
+  "testPresets": [
+    {"name": "windows", "configurePreset": "windows-tests", "output": {"outputOnFailure": true}},
+    {"name": "linux", "configurePreset": "linux-tests", "output": {"outputOnFailure": true}}
+  ]
+}

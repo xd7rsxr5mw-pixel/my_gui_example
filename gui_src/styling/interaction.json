@@ -1,0 +1,4 @@
+{
+  "animation": {"invalidInputDuration": 400, "workflowOutlineDuration": 0, "panelLayoutDuration": 280, "buttonDuration": 120, "panelBodyFadeDuration": 160, "panelCollapseDuration": 160, "panelLayoutSettleDelay": 20, "workflowScrollDuration": 260, "workflowScrollEasing": 7},
+  "input": {"confirmationResetTimeout": 5000, "resizeHoverDelay": 250, "panelWheelStep": 60, "panelWheelAngleUnit": 120, "listWheelHandoffDelay": 250, "listClickDragThreshold": 10, "autoScrollInterval": 16, "autoScrollDeadZone": 18, "autoScrollVelocityFactor": 22, "autoScrollMaxVelocity": 3200, "autoScrollIndicatorSize": 27, "autoScrollIndicatorStrokeWidth": 1, "autoScrollIndicatorDotSize": 4, "autoScrollChevronStrokeLength": 9, "autoScrollChevronStrokeHeight": 3, "autoScrollCursorOpacity": 0.88, "autoScrollIndicatorHideDistance": 46, "listRemovalHorizontalOutsideFraction": 0.5}
+}

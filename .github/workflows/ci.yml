@@ -1,0 +1,79 @@
+name: Example CI
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Example / ${{ matrix.platform }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: linux
+            os: ubuntu-24.04
+            shell: bash
+          - platform: windows
+            os: windows-latest
+            shell: msys2 {0}
+    defaults:
+      run:
+        shell: ${{ matrix.shell }}
+    env:
+      QT_FORCE_STDERR_LOGGING: '1'
+    steps:
+      - name: Check out example and pinned engine
+        # A private engine requires separately configured read access before
+        # publishing/enabling this workflow. No cross-repository secret is assumed.
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          submodules: recursive
+          persist-credentials: false
+
+      - name: Install Linux build and display dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y g++ cmake ninja-build xvfb xauth libgl1-mesa-dri libegl1 libopengl0 libxcb-cursor0 libxkbcommon-x11-0
+
+      - name: Install minimum supported Qt series
+        if: runner.os == 'Linux'
+        uses: jurplel/install-qt-action@b344308e4483fc892e0d27b3cd1b173ebdd95f06 # v4.5.0
+        with:
+          version: '6.9.3'
+          arch: linux_gcc_64
+
+      - name: Install Windows UCRT64 toolchain and Qt
+        if: runner.os == 'Windows'
+        uses: msys2/setup-msys2@ec48f7c5447b3140e2b088413ae3a55687bccb6e # v2.33.0
+        with:
+          msystem: UCRT64
+          update: true
+          install: >-
+            mingw-w64-ucrt-x86_64-gcc
+            mingw-w64-ucrt-x86_64-cmake
+            mingw-w64-ucrt-x86_64-ninja
+            mingw-w64-ucrt-x86_64-qt6-base
+            mingw-w64-ucrt-x86_64-qt6-declarative
+            mingw-w64-ucrt-x86_64-qt6-tools
+
+      - name: Configure isolated integration tests
+        run: >-
+          cmake -S . -B gui_testing/.artifacts/cmake/ci/${{ matrix.platform }} -G Ninja
+          -DCMAKE_BUILD_TYPE=Debug -DMYGUI_EXAMPLE_BUILD_APP=OFF
+          -DMYGUI_EXAMPLE_BUILD_TESTS=ON -DMYGUI_ENGINE_BUILD_TESTS=ON
+
+      - name: Build
+        run: cmake --build gui_testing/.artifacts/cmake/ci/${{ matrix.platform }} --parallel 4
+
+      - name: Test
+        run: ctest --test-dir gui_testing/.artifacts/cmake/ci/${{ matrix.platform }} --output-on-failure --no-tests=error
